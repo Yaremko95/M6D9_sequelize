@@ -9,7 +9,9 @@ const sequelize = new Sequelize(
   process.env.PASSWORD,
   { host: process.env.HOST, dialect: "postgres" }
 );
-
+console.log(process.env.DATABASE, process.env.USER, process.env.PASSWORD, {
+  host: process.env.HOST,
+});
 //test connection
 sequelize
   .authenticate()
