@@ -12,7 +12,7 @@ router.route("/").get(async (req, res, next) => {
       include: { model: Product, include: { model: Category } },
       attributes: [
         "product.id",
-        // "product.categoryId",
+        "product.categoryId",
         [Sequelize.fn("count", Sequelize.col("productId")), "unitaryQty"],
         [Sequelize.fn("sum", Sequelize.col("product.price")), "totalPrice"],
       ],
