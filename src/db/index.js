@@ -13,10 +13,10 @@ console.log(process.env.DATABASE, process.env.USER, process.env.PASSWORD, {
   host: process.env.HOST,
 });
 //test connection
-sequelize
-  .authenticate()
-  .then(() => console.log("Connection has been established"))
-  .catch((e) => console.log("Unable to establish connection:", e));
+// sequelize
+//   .authenticate()
+//   .then(() => console.log("Connection has been established"))
+//   .catch((e) => console.log("Unable to establish connection:", e));
 
 //includes all the Models
 const models = {
