@@ -18,17 +18,27 @@ router.route("/").get(async (req, res, next) => {
       ],
       group: ["product.id", "product->category.id"],
     });
-    const total = cart
-      .map((c) => c.toJSON())
-      .reduce(
-        (a, b) => ({
-          totalPrice: a.totalPrice + b.totalPrice,
-          unitaryQty: parseFloat(a.unitaryQty) + parseFloat(b.unitaryQty),
-        }),
-        { totalPrice: 0, unitaryQty: 0 }
-      );
-    console.log(total);
-    res.send({ products: cart, ...total });
+
+    const qty = await Cart.count();
+    /** OR
+      const qty = await Cart.findAll({
+      raw: true,
+      attributes: [[Sequelize.fn("count", Sequelize.col("id")), "qty"]],
+    }); */
+
+    /** WIL  NOT WORK !!
+     * SELECT SUM(p.price) FROM carts  c LEFT JOIN products p on c."productId"=p.id
+     *
+    const total = await Cart.findAll({
+      include: { model: Product, attributes: [] },
+      attributes: [
+        [Sequelize.fn("sum", Sequelize.col("product.price")), "total"],
+      ],
+    }); */
+    const total = await Cart.sum("product.price", {
+      include: { model: Product, attributes: [] },
+    });
+    res.send({ products: cart, qty, total });
   } catch (e) {
     console.log(e);
     next(e);
