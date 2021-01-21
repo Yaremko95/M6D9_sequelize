@@ -4,10 +4,10 @@ const User = require("./user");
 const Cart = require("./cart");
 const Category = require("./category");
 const sequelize = new Sequelize(
-  process.env.PGDATABASE,
-  process.env.PGUSER,
-  process.env.PGPASSWORD,
-  { host: process.env.PGHOST, dialect: "postgres" }
+  process.env.DATABASE,
+  process.env.USER,
+  process.env.PASSWORD,
+  { host: process.env.HOST, dialect: "postgres" }
 );
 
 //test connection
